@@ -1,6 +1,7 @@
 import sessionManager from './sessionManager';
+import { getSameOriginUrl } from '@/lib/runtime-url';
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
+const CLEANUP_ENDPOINT = getSameOriginUrl( '/api/images/cleanup' );
 
 class CleanupService {
   private static instance: CleanupService;
@@ -16,7 +17,7 @@ class CleanupService {
 
   async cleanupSessionImages( sessionId: string ): Promise<boolean> {
     try {
-      const response = await fetch( `${SERVER_URL}/api/images/cleanup/${sessionId}`, {
+      const response = await fetch( `${CLEANUP_ENDPOINT}/${sessionId}`, {
         method: 'DELETE'
       } );
 
@@ -53,7 +54,7 @@ class CleanupService {
       if ( session ) {
         // Synchronous cleanup for page unload
         navigator.sendBeacon(
-          `${SERVER_URL}/api/images/cleanup/${session.roomId}`
+          `${CLEANUP_ENDPOINT}/${session.roomId}`
         );
       }
     } );

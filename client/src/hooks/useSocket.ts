@@ -2,6 +2,7 @@ import { createMessageTimestamp, formatMessageTime } from "@/utils/dateUtils";
 import { encryptMessage, decryptMessage } from "@/utils/encryptionUtils";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
+import { getCurrentOrigin } from "@/lib/runtime-url";
 import sessionManager from "@/services/sessionManager";
 import cleanupService from "@/services/imageServices";
 import {
@@ -12,9 +13,6 @@ import {
     SocketHookReturn,
     LoadOldMessagesData
 } from "@/types/socket";
-
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
-
 // Create system message
 const createSystemMessage = (
     sender: string,
@@ -57,7 +55,8 @@ export function useSocket( roomId: string, userName: string = "" ): SocketHookRe
     const recentlyLeftUsers = useRef<Record<string, number>>( {} );
 
     useEffect( () => {
-        const socketIo = io( SERVER_URL, {
+        const socketIo = io( getCurrentOrigin(), {
+            path: "/socket.io",
             transports: ["websocket", "polling"],
             upgrade: true,
             forceNew: true,

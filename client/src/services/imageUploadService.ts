@@ -1,9 +1,8 @@
 // This service will handle image uploads when sending messages
 import { UploadedFile } from '@/contexts/UploadedFilesContext';
+import { getSameOriginUrl } from '@/lib/runtime-url';
 
-// Server API endpoints for uploading files
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
-const UPLOAD_ENDPOINT = `${SERVER_URL}/api/images/upload`;
+const UPLOAD_ENDPOINT = getSameOriginUrl( '/api/images/upload' );
 
 /**
  * Get the current session ID for this chat
