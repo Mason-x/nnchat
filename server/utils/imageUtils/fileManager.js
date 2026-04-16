@@ -37,11 +37,11 @@ export const deleteSessionFile = ( sessionId, filename ) => {
 
 /**
  * Generates a URL for an uploaded file
- * @param {string} serverUrl - The base server URL
+ * @param {string} _serverUrl - The base server URL (unused, kept for compatibility)
  * @param {string} sessionId - The ID of the session
  * @param {string} filename - The name of the file
  * @returns {string} - The URL to access the file
  */
-export const generateFileUrl = ( serverUrl, sessionId, filename ) => {
-  return `${serverUrl}/images/sessions/${sessionId}/${filename}`;
+export const generateFileUrl = ( _serverUrl, sessionId, filename ) => {
+  return `/images/sessions/${sessionId}/${filename}`;
 };
