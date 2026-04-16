@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   // Configure Next.js Image optimization
   images: {
     domains: ['localhost', 'nookchat-production.up.railway.app'],
